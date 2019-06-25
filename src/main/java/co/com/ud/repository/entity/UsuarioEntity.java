@@ -7,6 +7,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -23,6 +25,9 @@ import lombok.ToString;
 @Table(name = "us_usuario",uniqueConstraints = {
 		@UniqueConstraint(columnNames = "email", name = "UK_USUARIO_EMAIL")
 } )
+@NamedQueries({
+	@NamedQuery(name = "UsuarioEntity.updateTipoUsuario", query = "UPDATE UsuarioEntity u SET u.tipoUsuario = :tipoUsuario WHERE u.id = :id")
+})
 @Getter @Setter @ToString
 public class UsuarioEntity {
 	

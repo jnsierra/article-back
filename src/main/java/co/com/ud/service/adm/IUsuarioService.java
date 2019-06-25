@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import co.com.ud.adm.dto.TokenDto;
 import co.com.ud.repository.entity.UsuarioEntity;
+import co.com.ud.repository.entity.enumeracion.TipoUsuario;
 
 public interface IUsuarioService {
 	/**
@@ -29,6 +30,13 @@ public interface IUsuarioService {
 	 */
 	Optional<UsuarioEntity> getByCorreo(String correo);
 	/**
+	 * Metodo con el cual obtengo el usuario por medio de su id
+	 * @param correo
+	 * @return
+	 */
+	Optional<UsuarioEntity> getById(Long id);
+	
+	/**
 	 * Metodo con el cual inserto un usuario
 	 * @param usuario
 	 * @return
@@ -39,5 +47,12 @@ public interface IUsuarioService {
 	 * @return
 	 */
 	List<UsuarioEntity> getAllUsers();
+	/**
+	 * Metodo con el cual actualizo el 
+	 * @param tipoUsuario
+	 * @param id
+	 * @return
+	 */
+	Boolean updateTipoUsuario(TipoUsuario tipoUsuario, Long id);
 
 }

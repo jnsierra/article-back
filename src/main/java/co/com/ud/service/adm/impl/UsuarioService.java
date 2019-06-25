@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import co.com.ud.adm.dto.TokenDto;
 import co.com.ud.repository.entity.UsuarioEntity;
+import co.com.ud.repository.entity.enumeracion.TipoUsuario;
 import co.com.ud.repository.repo.IUsuarioRepository;
 import co.com.ud.service.adm.ITokenService;
 import co.com.ud.service.adm.IUsuarioService;
@@ -55,6 +56,16 @@ public class UsuarioService implements IUsuarioService{
 	@Override
 	public List<UsuarioEntity> getAllUsers() {
 		return usuarioRepository.findAll();
+	}
+
+	@Override
+	public Optional<UsuarioEntity> getById(Long id) {
+		return usuarioRepository.findById(id);
+	}
+
+	@Override
+	public Boolean updateTipoUsuario(TipoUsuario tipoUsuario, Long id) { 
+		return (usuarioRepository.updateTipoUsuario(tipoUsuario, id) >= 1 ) ? Boolean.TRUE: Boolean.FALSE;
 	}
 
 }

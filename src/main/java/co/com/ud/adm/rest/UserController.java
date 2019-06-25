@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,6 +46,20 @@ public class UserController {
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UsuarioDto[]> getAll(){
 		return new ResponseEntity<>(map.map(usuarioService.getAllUsers(), UsuarioDto[].class ),HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/{idUsuario}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UsuarioDto> getByUser(@PathVariable("idUsuario") Long idUser){
+		Optional<UsuarioEntity> usuario = usuarioService.getById(idUser);
+		if(!usuario.isPresent()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(map.map(usuario.get(), UsuarioDto.class),HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> updateTipoUsuario(@RequestBody(required = true) UsuarioDto usuarioDto){
+		return new ResponseEntity<>(usuarioService.updateTipoUsuario(usuarioDto.getTipoUsuario(), usuarioDto.getId()),HttpStatus.OK);
 	}
 
 }
