@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -16,6 +18,9 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "id_ideas")
+@NamedQueries({
+	@NamedQuery(name = "IdeaEntity.buscarIdeasPorUsuario", query = "select idea from IdeaEntity idea inner join fetch idea.usuario us where us.id = :idUsuario")
+})
 @Getter
 @Setter
 public class IdeaEntity extends Auditable<String>{
@@ -29,8 +34,10 @@ public class IdeaEntity extends Auditable<String>{
 	@Column(name = "contenido", length = 2500)
 	private String contenido;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "usuario_id")
+	@JoinColumn(name = "usuario_id",nullable = false)
 	private UsuarioEntity usuario;
+	@Column(name = "profesor_id", nullable = false)
+	private Long idProfesor;
 
 	@Override
 	public int hashCode() {
