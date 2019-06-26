@@ -44,7 +44,7 @@ public class UsuarioService implements IUsuarioService{
 	}
 
 	@Override
-	public Optional<UsuarioEntity> getByCorreo(String correo) {
+	public List<UsuarioEntity> getByCorreo(String correo) {
 		return usuarioRepository.findByCorreoAllIgnoreCase(correo);
 	}
 
@@ -66,6 +66,11 @@ public class UsuarioService implements IUsuarioService{
 	@Override
 	public Boolean updateTipoUsuario(TipoUsuario tipoUsuario, Long id) { 
 		return (usuarioRepository.updateTipoUsuario(tipoUsuario, id) >= 1 ) ? Boolean.TRUE: Boolean.FALSE;
+	}
+
+	@Override
+	public List<UsuarioEntity> getByTipoUsuario(TipoUsuario tipoUsuario) {
+		return usuarioRepository.findByTipoUsuario(tipoUsuario);
 	}
 
 }

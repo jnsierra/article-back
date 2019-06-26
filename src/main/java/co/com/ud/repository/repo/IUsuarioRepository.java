@@ -1,5 +1,6 @@
 package co.com.ud.repository.repo;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -28,7 +29,14 @@ public interface IUsuarioRepository extends CrudRepository<UsuarioEntity, Long>,
 	 * @param correo
 	 * @return
 	 */
-	Optional<UsuarioEntity> findByCorreoAllIgnoreCase(String correo);
+	List<UsuarioEntity> findByCorreoAllIgnoreCase(String correo);
+	
+	/**
+	 * Metodo con el cual obtengo un usuario por medio de su correo
+	 * @param correo
+	 * @return
+	 */
+	List<UsuarioEntity> findByTipoUsuario(TipoUsuario tipoUsuario);
 	/**
 	 * Metodo con el cual se actualiza el tipo de usuario
 	 * @param tipoUsuario

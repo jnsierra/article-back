@@ -28,7 +28,14 @@ public interface IUsuarioService {
 	 * @param correo
 	 * @return
 	 */
-	Optional<UsuarioEntity> getByCorreo(String correo);
+	List<UsuarioEntity> getByCorreo(String correo);
+	
+	/**
+	 * Metodo con el cual obtengo un usuario por medio de su correo
+	 * @param correo
+	 * @return
+	 */
+	List<UsuarioEntity> getByTipoUsuario(TipoUsuario tipoUsuario);
 	/**
 	 * Metodo con el cual obtengo el usuario por medio de su id
 	 * @param correo
