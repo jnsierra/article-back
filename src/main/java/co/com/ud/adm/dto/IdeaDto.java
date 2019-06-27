@@ -1,6 +1,5 @@
 package co.com.ud.adm.dto;
 
-import co.com.ud.repository.entity.enumeracion.ESTADO_IDEA;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +10,7 @@ public class IdeaDto {
 	private String titulo;
 	private String contenido;
 	private Long idProfesor;
-	private ESTADO_IDEA estado;
+	private String estado;
 	private ProfesorDto profesores;
 	
 }

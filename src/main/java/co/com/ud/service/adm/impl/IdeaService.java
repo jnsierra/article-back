@@ -11,7 +11,6 @@ import org.springframework.util.Assert;
 
 import co.com.ud.repository.entity.IdeaEntity;
 import co.com.ud.repository.entity.UsuarioEntity;
-import co.com.ud.repository.entity.enumeracion.ESTADO_IDEA;
 import co.com.ud.repository.repo.IIdeaRepository;
 import co.com.ud.service.adm.IIdeaService;
 import co.com.ud.service.adm.IUsuarioService;
@@ -43,11 +42,17 @@ public class IdeaService implements IIdeaService {
 	}
 
 	@Override
-	public List<IdeaEntity> getIdeaByProfesorAndEstado(ESTADO_IDEA estado, Long idProfesor) {
+	public List<IdeaEntity> getIdeaByProfesorAndEstado(String estado, Long idProfesor) {
 		if(estado == null ) {
 			return ideaRepository.buscarIdeaByProfesor(idProfesor);
 		}
 		return ideaRepository.buscarIdeaByProfesorAndEstado(idProfesor, estado);
+	}
+
+	@Override
+	public Boolean updateEstadoIdea(Long idIdea, String estado) {
+		Integer objUpdated = ideaRepository.updateEstado(idIdea, estado);
+		return (objUpdated >= 1) ? Boolean.TRUE : Boolean.FALSE;
 	}
 
 }

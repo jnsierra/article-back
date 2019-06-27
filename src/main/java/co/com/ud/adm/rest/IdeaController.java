@@ -22,7 +22,6 @@ import co.com.ud.adm.dto.ProfesorDto;
 import co.com.ud.adm.dto.UsuarioDto;
 import co.com.ud.repository.entity.IdeaEntity;
 import co.com.ud.repository.entity.UsuarioEntity;
-import co.com.ud.repository.entity.enumeracion.ESTADO_IDEA;
 import co.com.ud.service.adm.IUsuarioService;
 import co.com.ud.service.adm.impl.IdeaService;
 
@@ -62,7 +61,7 @@ public class IdeaController {
 	}
 
 	@RequestMapping(value = "/profesor/{idProfesor}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<IdeaProfesorDto[]> getIdeasRevisarProfesor(@PathVariable(name = "idProfesor", required = true) Long idProfesor, @RequestParam(name = "estado", required = false) ESTADO_IDEA estado) {
+	public ResponseEntity<IdeaProfesorDto[]> getIdeasRevisarProfesor(@PathVariable(name = "idProfesor", required = true) Long idProfesor, @RequestParam(name = "estado", required = false) String estado) {
 		List<IdeaEntity> ideas = ideaService.getIdeaByProfesorAndEstado(estado, idProfesor);
 		IdeaProfesorDto[] ideasRta = new IdeaProfesorDto[ideas.size()];
 		int i = 0;
@@ -80,6 +79,12 @@ public class IdeaController {
 			i++;
 		}
 		return new ResponseEntity<>(ideasRta, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/estado/{idIdea}/{estado}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> cambiarEstadoIdea(@PathVariable("idIdea") Long idIdea, 
+			@PathVariable("estado") String estado){
+		return new ResponseEntity<>(ideaService.updateEstadoIdea(idIdea, estado), HttpStatus.OK);
 	}
 
 }
