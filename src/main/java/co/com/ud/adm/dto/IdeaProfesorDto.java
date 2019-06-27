@@ -5,13 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class IdeaDto {
+public class IdeaProfesorDto {
 	
 	private Long id;
 	private String titulo;
 	private String contenido;
 	private Long idProfesor;
 	private ESTADO_IDEA estado;
-	private ProfesorDto profesores;
-	
+	private UsuarioDto alumno;
+
 }

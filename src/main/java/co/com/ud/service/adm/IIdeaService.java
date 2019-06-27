@@ -3,6 +3,7 @@ package co.com.ud.service.adm;
 import java.util.List;
 
 import co.com.ud.repository.entity.IdeaEntity;
+import co.com.ud.repository.entity.enumeracion.ESTADO_IDEA;
 
 public interface IIdeaService {
 	/**
@@ -20,4 +21,11 @@ public interface IIdeaService {
 	 * @return
 	 */
 	List<IdeaEntity> getIdeaByUsuario(Long id);
+	/**
+	 * Metodo con el cual obtengo todas las ideas que debe reviar un profesor
+	 * @param estado
+	 * @param idProfesor
+	 * @return
+	 */
+	List<IdeaEntity> getIdeaByProfesorAndEstado(ESTADO_IDEA estado, Long idProfesor);
 }

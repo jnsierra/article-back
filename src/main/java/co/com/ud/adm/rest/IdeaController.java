@@ -1,11 +1,15 @@
 package co.com.ud.adm.rest;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.com.ud.adm.dto.IdeaDto;
+import co.com.ud.adm.dto.IdeaProfesorDto;
+import co.com.ud.adm.dto.ProfesorDto;
+import co.com.ud.adm.dto.UsuarioDto;
 import co.com.ud.repository.entity.IdeaEntity;
+import co.com.ud.repository.entity.UsuarioEntity;
+import co.com.ud.repository.entity.enumeracion.ESTADO_IDEA;
+import co.com.ud.service.adm.IUsuarioService;
 import co.com.ud.service.adm.impl.IdeaService;
 
 @RestController
@@ -22,6 +32,8 @@ import co.com.ud.service.adm.impl.IdeaService;
 public class IdeaController {
 	@Autowired
 	IdeaService ideaService;
+	@Autowired
+	IUsuarioService usuarioService;
 	@Autowired
 	ModelMapper mapper;
 
@@ -34,8 +46,40 @@ public class IdeaController {
 
 	@RequestMapping(value = "/by/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<IdeaDto[]> getIdeasByParams(@RequestParam(name = "idUsuario") Long idUsuario) {
-		return new ResponseEntity<>(mapper.map(ideaService.getIdeaByUsuario(idUsuario), IdeaDto[].class),
-				HttpStatus.OK);
+		IdeaDto[] ideas = mapper.map(ideaService.getIdeaByUsuario(idUsuario), IdeaDto[].class);
+		if (ideas != null && ideas.length != 0) {
+			for (IdeaDto item : ideas) {
+				Optional<UsuarioEntity> profesor = usuarioService.getById(item.getIdProfesor());
+				if (profesor.isPresent()) {
+					item.setProfesores(new ProfesorDto());
+					item.getProfesores().setId(profesor.get().getId());
+					item.getProfesores().setNombre(profesor.get().getNombre());
+				}
+
+			}
+		}
+		return new ResponseEntity<>(ideas, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/profesor/{idProfesor}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<IdeaProfesorDto[]> getIdeasRevisarProfesor(@PathVariable(name = "idProfesor", required = true) Long idProfesor, @RequestParam(name = "estado", required = false) ESTADO_IDEA estado) {
+		List<IdeaEntity> ideas = ideaService.getIdeaByProfesorAndEstado(estado, idProfesor);
+		IdeaProfesorDto[] ideasRta = new IdeaProfesorDto[ideas.size()];
+		int i = 0;
+		for(IdeaEntity item : ideas) {
+			IdeaProfesorDto aux = new IdeaProfesorDto();
+			aux.setId(item.getId());
+			aux.setContenido(item.getContenido());
+			aux.setIdProfesor(item.getIdProfesor());
+			aux.setEstado(item.getEstado());
+			aux.setTitulo(item.getTitulo());
+			aux.setAlumno(new UsuarioDto());
+			aux.getAlumno().setId(item.getUsuario().getId());
+			aux.getAlumno().setNombre(item.getUsuario().getNombre());
+			ideasRta[i] = aux;
+			i++;
+		}
+		return new ResponseEntity<>(ideasRta, HttpStatus.OK);
 	}
 
 }

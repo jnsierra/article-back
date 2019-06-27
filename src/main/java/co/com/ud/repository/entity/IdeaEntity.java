@@ -2,6 +2,8 @@ package co.com.ud.repository.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,13 +15,16 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import co.com.ud.repository.entity.enumeracion.ESTADO_IDEA;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Table(name = "id_ideas")
 @NamedQueries({
-	@NamedQuery(name = "IdeaEntity.buscarIdeasPorUsuario", query = "select idea from IdeaEntity idea inner join fetch idea.usuario us where us.id = :idUsuario")
+	@NamedQuery(name = "IdeaEntity.buscarIdeasPorUsuario", query = "select idea from IdeaEntity idea inner join fetch idea.usuario us where us.id = :idUsuario"),
+	@NamedQuery(name = "IdeaEntity.buscarIdeaByProfesorAndEstado", query = "select idea from IdeaEntity idea where idea.estado = :estado and idea.idProfesor = :idProfesor"),
+	@NamedQuery(name = "IdeaEntity.buscarIdeaByProfesor", query = "select idea from IdeaEntity idea where idea.idProfesor = :idProfesor")
 })
 @Getter
 @Setter
@@ -38,6 +43,9 @@ public class IdeaEntity extends Auditable<String>{
 	private UsuarioEntity usuario;
 	@Column(name = "profesor_id", nullable = false)
 	private Long idProfesor;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "estado")
+	private ESTADO_IDEA estado;
 
 	@Override
 	public int hashCode() {
