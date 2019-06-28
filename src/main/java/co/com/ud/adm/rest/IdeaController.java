@@ -81,10 +81,10 @@ public class IdeaController {
 		return new ResponseEntity<>(ideasRta, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/estado/{idIdea}/{estado}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/estado/{idIdea}/{estado}/{idProfesor}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> cambiarEstadoIdea(@PathVariable("idIdea") Long idIdea, 
-			@PathVariable("estado") String estado){
-		return new ResponseEntity<>(ideaService.updateEstadoIdea(idIdea, estado), HttpStatus.OK);
+			@PathVariable("estado") String estado, @PathVariable("idProfesor")Long idProfesor){
+		return new ResponseEntity<>(ideaService.updateEstadoIdea(idIdea, estado, idProfesor), HttpStatus.OK);
 	}
 
 }

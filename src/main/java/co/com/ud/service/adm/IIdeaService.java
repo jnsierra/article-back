@@ -33,5 +33,5 @@ public interface IIdeaService {
 	 * @param estado
 	 * @return
 	 */
-	Boolean updateEstadoIdea(Long idIdea, String estado);
+	Boolean updateEstadoIdea(Long idIdea, String estado, Long idProfAut);
 }

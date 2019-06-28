@@ -49,5 +49,5 @@ public interface IIdeaRepository extends CrudRepository<IdeaEntity, Long>, JpaRe
 	 */
 	@Modifying
 	@Transactional
-	Integer updateEstado(@Param("idIdea")Long idIdea,@Param("estado") String estado);
+	Integer updateEstado(@Param("idIdea")Long idIdea,@Param("estado") String estado, @Param("idProfAut")Long idProfAut);
 }

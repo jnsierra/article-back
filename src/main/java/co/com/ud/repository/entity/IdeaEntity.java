@@ -1,5 +1,7 @@
 package co.com.ud.repository.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +14,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,10 +23,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "id_ideas")
 @NamedQueries({
-	@NamedQuery(name = "IdeaEntity.buscarIdeasPorUsuario", query = "select idea from IdeaEntity idea inner join fetch idea.usuario us where us.id = :idUsuario"),
-	@NamedQuery(name = "IdeaEntity.buscarIdeaByProfesorAndEstado", query = "select idea from IdeaEntity idea where idea.estado = :estado and idea.idProfesor = :idProfesor"),
+	@NamedQuery(name = "IdeaEntity.buscarIdeasPorUsuario", query = "select idea from IdeaEntity idea inner join fetch idea.usuario us where us.id = :idUsuario order by idea.estado "),
+	@NamedQuery(name = "IdeaEntity.buscarIdeaByProfesorAndEstado", query = "select idea from IdeaEntity idea where idea.estado = :estado and idea.idProfesor = :idProfesor order by idea.estado"),
 	@NamedQuery(name = "IdeaEntity.buscarIdeaByProfesor", query = "select idea from IdeaEntity idea where idea.idProfesor = :idProfesor"),
-	@NamedQuery(name = "IdeaEntity.updateEstado", query = "update IdeaEntity idea SET idea.estado = :estado WHERE idea.id = :idIdea")
+	@NamedQuery(name = "IdeaEntity.updateEstado", query = "update IdeaEntity idea SET idea.estado = :estado, idea.idProfesorAutoriza = :idProfAut, idea.fechaAprobacion = current_date WHERE idea.id = :idIdea")
 })
 @Getter
 @Setter
@@ -43,6 +47,11 @@ public class IdeaEntity extends Auditable<String>{
 	private Long idProfesor;
 	@Column(name = "estado")
 	private String estado;
+	@Column(name = "idProfAutoriza")
+	private Long idProfesorAutoriza;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "fechaAprob")
+	private Date fechaAprobacion;
 
 	@Override
 	public int hashCode() {

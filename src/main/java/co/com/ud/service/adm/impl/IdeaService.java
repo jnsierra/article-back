@@ -50,8 +50,8 @@ public class IdeaService implements IIdeaService {
 	}
 
 	@Override
-	public Boolean updateEstadoIdea(Long idIdea, String estado) {
-		Integer objUpdated = ideaRepository.updateEstado(idIdea, estado);
+	public Boolean updateEstadoIdea(Long idIdea, String estado, Long idProfAut) {
+		Integer objUpdated = ideaRepository.updateEstado(idIdea, estado, idProfAut);
 		return (objUpdated >= 1) ? Boolean.TRUE : Boolean.FALSE;
 	}
 
