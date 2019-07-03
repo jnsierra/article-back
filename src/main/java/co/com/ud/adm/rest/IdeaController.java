@@ -20,6 +20,7 @@ import co.com.ud.adm.dto.IdeaDto;
 import co.com.ud.adm.dto.IdeaProfesorDto;
 import co.com.ud.adm.dto.ProfesorDto;
 import co.com.ud.adm.dto.UsuarioDto;
+import co.com.ud.alumno.dto.IdeaAlumnoDto;
 import co.com.ud.repository.entity.IdeaEntity;
 import co.com.ud.repository.entity.UsuarioEntity;
 import co.com.ud.service.adm.IUsuarioService;
@@ -41,6 +42,32 @@ public class IdeaController {
 		return new ResponseEntity<>(
 				mapper.map(ideaService.guardarIdea(mapper.map(idea, IdeaEntity.class)), IdeaDto.class),
 				HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value = "/{id}/")
+	public ResponseEntity<IdeaAlumnoDto> findById(@PathVariable(value = "id", required = true)Long id){
+		Optional<IdeaEntity> idea = ideaService.findByIdea(id);
+		IdeaAlumnoDto ideaAlumno = null;
+		if( !idea.isPresent() ) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}else {
+			ideaAlumno = mapper.map(idea.get(), IdeaAlumnoDto.class);
+			
+			//Realizamos el mapeo de profesor
+			Optional<UsuarioEntity> profesor = usuarioService.getById( ideaAlumno.getIdProfesor() );
+			Optional<UsuarioEntity> proAut = usuarioService.getById( ideaAlumno.getIdProfesorAutoriza() );
+			if (profesor.isPresent()) {
+				ideaAlumno.setProfesorAsignado(new ProfesorDto());
+				ideaAlumno.getProfesorAsignado().setId(profesor.get().getId());
+				ideaAlumno.getProfesorAsignado().setNombre(profesor.get().getNombre());
+			}
+			if (proAut.isPresent()) {
+				ideaAlumno.setProfesorAutoriza(new ProfesorDto());
+				ideaAlumno.getProfesorAutoriza().setId(proAut.get().getId());
+				ideaAlumno.getProfesorAutoriza().setNombre(proAut.get().getNombre());
+			}
+		}
+		return new ResponseEntity<>(ideaAlumno, HttpStatus.OK );		
 	}
 
 	@RequestMapping(value = "/by/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

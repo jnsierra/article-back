@@ -1,6 +1,7 @@
 package co.com.ud.service.adm;
 
 import java.util.List;
+import java.util.Optional;
 
 import co.com.ud.repository.entity.IdeaEntity;
 
@@ -28,10 +29,22 @@ public interface IIdeaService {
 	 */
 	List<IdeaEntity> getIdeaByProfesorAndEstado(String estado, Long idProfesor);
 	/**
+	 * Metodo con el cual cambio el estado de la idea
+	 * @param idIdea
+	 * @return
+	 */
+	Boolean updateEstadoIdeaEnEspera(Long idIdea);
+	/**
 	 * Metodo con el cual se cambia el estado de una idea
 	 * @param idIdea
 	 * @param estado
 	 * @return
 	 */
 	Boolean updateEstadoIdea(Long idIdea, String estado, Long idProfAut);
+	/**
+	 * Metodo con el cual obtengo la informacion de la idea
+	 * @param id
+	 * @return
+	 */
+	Optional<IdeaEntity> findByIdea(Long id);
 }

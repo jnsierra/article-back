@@ -2,6 +2,7 @@ package co.com.ud.repository.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,7 +28,8 @@ import lombok.Setter;
 	@NamedQuery(name = "IdeaEntity.buscarIdeasPorUsuario", query = "select idea from IdeaEntity idea inner join fetch idea.usuario us where us.id = :idUsuario order by idea.estado "),
 	@NamedQuery(name = "IdeaEntity.buscarIdeaByProfesorAndEstado", query = "select idea from IdeaEntity idea where idea.estado = :estado and idea.idProfesor = :idProfesor order by idea.estado"),
 	@NamedQuery(name = "IdeaEntity.buscarIdeaByProfesor", query = "select idea from IdeaEntity idea where idea.idProfesor = :idProfesor"),
-	@NamedQuery(name = "IdeaEntity.updateEstado", query = "update IdeaEntity idea SET idea.estado = :estado, idea.idProfesorAutoriza = :idProfAut, idea.fechaAprobacion = current_date WHERE idea.id = :idIdea")
+	@NamedQuery(name = "IdeaEntity.updateEstado", query = "update IdeaEntity idea SET idea.estado = :estado, idea.idProfesorAutoriza = :idProfAut, idea.fechaAprobacion = now() WHERE idea.id = :idIdea"),
+	@NamedQuery(name = "IdeaEntity.updateEstadoEspera", query = "update IdeaEntity idea SET idea.estado = 'EN_ESPERA' WHERE idea.id = :idIdea")
 })
 @Getter
 @Setter
@@ -52,6 +55,8 @@ public class IdeaEntity extends Auditable<String>{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "fechaAprob")
 	private Date fechaAprobacion;
+	@OneToOne(mappedBy = "idea", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+	private ArticuloEntity articulo;
 
 	@Override
 	public int hashCode() {

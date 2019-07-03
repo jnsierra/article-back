@@ -2,6 +2,8 @@ package co.com.ud.service.adm.impl;
 
 import java.util.List;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import co.com.ud.repository.entity.UsuarioEntity;
 import co.com.ud.repository.repo.IIdeaRepository;
 import co.com.ud.service.adm.IIdeaService;
 import co.com.ud.service.adm.IUsuarioService;
+
 @Service
 public class IdeaService implements IIdeaService {
 	
@@ -35,6 +38,10 @@ public class IdeaService implements IIdeaService {
 		idea.setUsuario(usuariosId.get(0));
 		return ideaRepository.save(idea);
 	}
+	
+	public Optional<IdeaEntity> findByIdea(Long id) {
+		return ideaRepository.findById(id);
+	}
 
 	@Override
 	public List<IdeaEntity> getIdeaByUsuario(Long idUsuario) {
@@ -52,6 +59,12 @@ public class IdeaService implements IIdeaService {
 	@Override
 	public Boolean updateEstadoIdea(Long idIdea, String estado, Long idProfAut) {
 		Integer objUpdated = ideaRepository.updateEstado(idIdea, estado, idProfAut);
+		return (objUpdated >= 1) ? Boolean.TRUE : Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean updateEstadoIdeaEnEspera(Long idIdea) {
+		Integer objUpdated = ideaRepository.updateEstadoEspera(idIdea);
 		return (objUpdated >= 1) ? Boolean.TRUE : Boolean.FALSE;
 	}
 
