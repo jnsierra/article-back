@@ -20,7 +20,7 @@ import co.com.ud.adm.dto.IdeaDto;
 import co.com.ud.adm.dto.IdeaProfesorDto;
 import co.com.ud.adm.dto.ProfesorDto;
 import co.com.ud.adm.dto.UsuarioDto;
-import co.com.ud.alumno.dto.IdeaAlumnoDto;
+import co.com.ud.adm.dto.alumno.IdeaAlumnoDto;
 import co.com.ud.repository.entity.IdeaEntity;
 import co.com.ud.repository.entity.UsuarioEntity;
 import co.com.ud.service.adm.IUsuarioService;

@@ -1,4 +1,4 @@
-package co.com.ud.alumno.dto;
+package co.com.ud.adm.dto.alumno;
 
 import java.util.Date;
 

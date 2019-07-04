@@ -19,7 +19,9 @@ import lombok.Setter;
 @Entity
 @Table(name = "id_articulo")
 @NamedQueries({
-	@NamedQuery(name = "ArticuloEntity.getCountNotificationProf", query = "SELECT count(*) FROM ArticuloEntity art inner join art.idea as ide WHERE art.estado = 'ENVIADO_POR_CORRECCIONES' AND ide.idProfesor = :idProf  ")
+	@NamedQuery(name = "ArticuloEntity.getCountNotificationProf", query = "SELECT count(*) FROM ArticuloEntity art inner join art.idea as ide WHERE art.estado = 'ENVIADO_POR_CORRECCIONES' AND ide.idProfesor = :idProf  "),
+	@NamedQuery(name = "ArticuloEntity.getIdeasNotifiByProf", query = "SELECT art FROM ArticuloEntity art inner join fetch art.idea as ide WHERE art.estado = 'ENVIADO_POR_CORRECCIONES' AND ide.idProfesor = :idProf"),
+	@NamedQuery(name = "ArticuloEntity.updateEstado", query = "update ArticuloEntity art set art.estado = :estado WHERE id = :id")
 })
 @Getter @Setter
 public class ArticuloEntity extends Auditable<String> {
