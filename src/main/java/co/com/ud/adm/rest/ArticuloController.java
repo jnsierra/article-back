@@ -85,11 +85,21 @@ public class ArticuloController {
 		return new ResponseEntity<>(articuloService.getTitulosNotifProf(idProf), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/alumno/notificaciones/{idAlumno}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Integer> getNumRevisionAlumno(@PathVariable("idAlumno") Long idAlum){
+		Integer contador = articuloService.getCountNotificationAlum(idAlum);
+		return new ResponseEntity<Integer>( contador , HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/alumno/notificaciones/titulos/{idAlumno}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<NotificacionProfDto>> getNotificationsAlum(@PathVariable("idAlumno") Long idAlum){
+		return new ResponseEntity<>(articuloService.getTitulosNotifAlum(idAlum), HttpStatus.OK);
+	}
+	
+	
 	@RequestMapping(value = "/cambiarestado/", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> actualizarEstado(@RequestParam("idArticulo")Long idArticulo,
 			@RequestParam("estado") String estado){
-		System.out.println("Id Articulo: " + idArticulo );
-		System.out.println("Estado: " + estado);
 		return new ResponseEntity<>(articuloService.updateEstadoById(idArticulo, estado),HttpStatus.OK);
 	}
 

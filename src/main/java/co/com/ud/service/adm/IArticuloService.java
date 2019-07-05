@@ -20,11 +20,23 @@ public interface IArticuloService {
 	 */
 	Integer getCountNotificationProf(Long idProf);
 	/**
+	 * Metodo con el cual cuento las notificaciones que tiene cada estudiante 
+	 * @param idAlumno
+	 * @return
+	 */
+	Integer getCountNotificationAlum(Long idAlumno);
+	/**
 	 * Metodo con el cual por medio del id de profesor obtiene el id de las ideas
 	 * @param idProf
 	 * @return
 	 */
 	List<NotificacionProfDto> getTitulosNotifProf(Long idProf);
+	/**
+	 * Metodo con el cual por medio del id del alumno obtiene los titulos de las ideas
+	 * @param idAlumno
+	 * @return
+	 */
+	List<NotificacionProfDto> getTitulosNotifAlum(Long idAlumno);
 	/**
 	 * Metodo con el cual obtengo un articulo por medio de su id
 	 * @param id

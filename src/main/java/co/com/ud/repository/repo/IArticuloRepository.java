@@ -21,11 +21,23 @@ public interface IArticuloRepository extends CrudRepository<ArticuloEntity, Long
 	 */
 	Integer getCountNotificationProf(@Param("idProf") Long idProf);
 	/**
+	 * Metodo con el cual cuento las notificaciones que se tiene cada alumno
+	 * @param idAlum
+	 * @return
+	 */
+	Integer getCountNotificationAlum(@Param("idAlum") Long idAlum);
+	/**
 	 * Metodo con el cual obtengo las ideas que tiene asignado un profesor
 	 * @param idProf
 	 * @return
 	 */
 	List<ArticuloEntity> getIdeasNotifiByProf(@Param("idProf")Long idProf);
+	/**
+	 * Metodo con el cual obtengo las ideas que tiene asignado a un alumno
+	 * @param idAlum
+	 * @return
+	 */
+	List<ArticuloEntity> getIdeasNotifiByAlum(@Param("idAlum")Long idAlum);
 	/**
 	 * Metodo con el cual actualizo el estado de un articulo
 	 * @param id

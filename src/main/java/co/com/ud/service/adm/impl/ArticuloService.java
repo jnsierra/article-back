@@ -37,6 +37,14 @@ public class ArticuloService implements IArticuloService {
 	}
 	
 	@Override
+	public List<NotificacionProfDto> getTitulosNotifAlum(Long idAlumno) {
+		List<ArticuloEntity> articulos = articuloRepository.getIdeasNotifiByAlum(idAlumno);
+		return articulos.stream().parallel()
+				.map(item -> NotificacionProfDto.of(item.getId(), item.getIdea().getTitulo()))
+				.collect(Collectors.toList());
+	}
+	
+	@Override
 	public Optional<ArticuloEntity> getById(Long id){
 		return articuloRepository.findById(id);
 	}
@@ -44,6 +52,11 @@ public class ArticuloService implements IArticuloService {
 	@Override
 	public Boolean updateEstadoById(Long id, String estado) {
 		return articuloRepository.updateEstado(id, estado) > 0 ? Boolean.TRUE : Boolean.FALSE;
+	}
+
+	@Override
+	public Integer getCountNotificationAlum(Long idAlumno) {
+		return articuloRepository.getCountNotificationAlum(idAlumno);
 	}
 
 }
