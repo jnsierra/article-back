@@ -32,7 +32,7 @@ public class ArticuloService implements IArticuloService {
 	public List<NotificacionProfDto> getTitulosNotifProf(Long idProf) {
 		List<ArticuloEntity> articulos = articuloRepository.getIdeasNotifiByProf(idProf);
 		return  articulos.stream().parallel()
-				.map(item -> NotificacionProfDto.of(item.getId(), item.getIdea().getTitulo()))
+				.map(item -> NotificacionProfDto.of(item.getId(), item.getIdea().getTitulo(), "PROFESOR"))
 				.collect(Collectors.toList());
 	}
 	
@@ -40,7 +40,7 @@ public class ArticuloService implements IArticuloService {
 	public List<NotificacionProfDto> getTitulosNotifAlum(Long idAlumno) {
 		List<ArticuloEntity> articulos = articuloRepository.getIdeasNotifiByAlum(idAlumno);
 		return articulos.stream().parallel()
-				.map(item -> NotificacionProfDto.of(item.getId(), item.getIdea().getTitulo()))
+				.map(item -> NotificacionProfDto.of(item.getId(), item.getIdea().getTitulo(), "ALUMNO"))
 				.collect(Collectors.toList());
 	}
 	
