@@ -113,5 +113,14 @@ public class IdeaController {
 			@PathVariable("estado") String estado, @PathVariable("idProfesor")Long idProfesor){
 		return new ResponseEntity<>(ideaService.updateEstadoIdea(idIdea, estado, idProfesor), HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/{idIdea}/articulo/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Long> buscaIdArtByIdIdea(@PathVariable("idIdea")Long idIdea){
+		Optional<IdeaEntity> idea = ideaService.findByIdea(idIdea);
+		if(!idea.isPresent()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(idea.get().getArticulos().get(0).getId(),HttpStatus.OK);
+	}
 
 }

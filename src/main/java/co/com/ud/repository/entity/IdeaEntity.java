@@ -1,6 +1,7 @@
 package co.com.ud.repository.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -55,8 +56,8 @@ public class IdeaEntity extends Auditable<String>{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "fechaAprob")
 	private Date fechaAprobacion;
-	@OneToOne(mappedBy = "idea", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-	private ArticuloEntity articulo;
+	@OneToMany(mappedBy = "idea", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ArticuloEntity> articulos;
 
 	@Override
 	public int hashCode() {

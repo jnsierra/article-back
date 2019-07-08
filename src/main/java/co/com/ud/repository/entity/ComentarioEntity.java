@@ -19,7 +19,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "id_comentario")
 @NamedQueries({
-	@NamedQuery(name = "ComentarioEntity.getListByArtId", query = "select com from ComentarioEntity com inner join fetch com.articulo  arti  where arti.id = :idArt  ")
+	@NamedQuery(name = "ComentarioEntity.getListByIdeaId", query = "select com from ComentarioEntity com inner join fetch com.articulo  arti inner join arti.idea ide where ide.id = :ideaId  ")
 })
 @Getter @Setter
 public class ComentarioEntity extends Auditable<String> {

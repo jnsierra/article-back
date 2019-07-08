@@ -28,5 +28,5 @@ public interface IComentarioService {
 	 * @param idArt
 	 * @return
 	 */
-	List<ComentarioEntity> obtenerComentariosByArticulo(Long idArt);
+	List<ComentarioEntity> obtenerComentariosByArticulo(Long idIdea);
 }

@@ -42,9 +42,9 @@ public class ComentarioController {
 		return new ResponseEntity<>(mapper.map(comentarioGuard, ComentarioDto.class), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/articulo/{idArt}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ComentarioDto[]> getComentariosByIdArticulo(@PathVariable(name = "idArt", required = true)Long idArt){
-		List<ComentarioEntity> listComentarios = comentarioService.obtenerComentariosByArticulo(idArt);
+	@RequestMapping(value = "/articulo/idea/{idIdea}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ComentarioDto[]> getComentariosByIdArticulo(@PathVariable(name = "idIdea", required = true)Long idIdea){
+		List<ComentarioEntity> listComentarios = comentarioService.obtenerComentariosByArticulo(idIdea);
 		if(listComentarios.isEmpty()) {
 			return new ResponseEntity<>( HttpStatus.NO_CONTENT );
 		}

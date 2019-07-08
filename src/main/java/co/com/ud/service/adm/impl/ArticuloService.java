@@ -32,7 +32,7 @@ public class ArticuloService implements IArticuloService {
 	public List<NotificacionProfDto> getTitulosNotifProf(Long idProf) {
 		List<ArticuloEntity> articulos = articuloRepository.getIdeasNotifiByProf(idProf);
 		return  articulos.stream().parallel()
-				.map(item -> NotificacionProfDto.of(item.getId(), item.getIdea().getTitulo(), "PROFESOR"))
+				.map(item -> NotificacionProfDto.of(item.getId(), null, item.getIdea().getTitulo(), "PROFESOR") )
 				.collect(Collectors.toList());
 	}
 	
@@ -40,7 +40,7 @@ public class ArticuloService implements IArticuloService {
 	public List<NotificacionProfDto> getTitulosNotifAlum(Long idAlumno) {
 		List<ArticuloEntity> articulos = articuloRepository.getIdeasNotifiByAlum(idAlumno);
 		return articulos.stream().parallel()
-				.map(item -> NotificacionProfDto.of(item.getId(), item.getIdea().getTitulo(), "ALUMNO"))
+				.map(item -> NotificacionProfDto.of(item.getId(), item.getIdea().getId(),item.getIdea().getTitulo(), "ALUMNO" ))
 				.collect(Collectors.toList());
 	}
 	
@@ -57,6 +57,11 @@ public class ArticuloService implements IArticuloService {
 	@Override
 	public Integer getCountNotificationAlum(Long idAlumno) {
 		return articuloRepository.getCountNotificationAlum(idAlumno);
+	}
+
+	@Override
+	public List<ArticuloEntity> getAllArtByIdIdea(Long IdIdea) {
+		return articuloRepository.getAllArticulosByIdIdea(IdIdea);
 	}
 
 }

@@ -49,6 +49,15 @@ public class ArticuloController {
 		return new ResponseEntity<>(articulo, HttpStatus.CREATED);
 	}
 	
+	@RequestMapping(value = "/idea/{idIdea}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ArticuloDto[]> getAllArtByIdIdea(@PathVariable( name = "idIdea" , required = true) Long idIdea){
+		List<ArticuloEntity> articulos = articuloService.getAllArtByIdIdea(idIdea);
+		if(articulos.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(mapper.map(articulos, ArticuloDto[].class), HttpStatus.CREATED);
+	}
+	
 	@RequestMapping(value = "/{id}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ArticuloViewDto> getById(@PathVariable("id")Long id){
 		Optional<ArticuloEntity> articulo = articuloService.getById(id);

@@ -12,5 +12,5 @@ import co.com.ud.repository.entity.ComentarioEntity;
 @Repository
 public interface IComentarioRepository extends JpaRepository<ComentarioEntity, Long>, CrudRepository<ComentarioEntity, Long> {
 
-	List<ComentarioEntity> getListByArtId(@Param("idArt")Long idArt);
+	List<ComentarioEntity> getListByIdeaId(@Param("ideaId")Long idIdea);
 }

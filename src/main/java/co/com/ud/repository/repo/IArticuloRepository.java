@@ -47,4 +47,10 @@ public interface IArticuloRepository extends CrudRepository<ArticuloEntity, Long
 	@Modifying
 	@Transactional
 	Integer updateEstado(@Param("id") Long id, @Param("estado") String estado);
+	/**
+	 * Metodo con el cual obtengo todos los articulos por medio de el id de la idea
+	 * @param idIdea
+	 * @return
+	 */
+	List<ArticuloEntity> getAllArticulosByIdIdea(@Param("idIdea")Long idIdea);
 }

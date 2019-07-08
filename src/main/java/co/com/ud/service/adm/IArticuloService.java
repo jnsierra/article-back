@@ -50,5 +50,11 @@ public interface IArticuloService {
 	 * @return
 	 */
 	Boolean updateEstadoById(Long id, String estado);
+	/**
+	 * Metodo con el cual obtiene todas los articulos por medio de su id
+	 * @param IdIdea
+	 * @return
+	 */
+	List<ArticuloEntity> getAllArtByIdIdea(Long IdIdea);
 
 }

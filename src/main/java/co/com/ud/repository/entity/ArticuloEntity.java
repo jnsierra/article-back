@@ -30,7 +30,8 @@ import lombok.Setter;
 	@NamedQuery(name = "ArticuloEntity.getIdeasNotifiByProf", query = "SELECT art FROM ArticuloEntity art inner join fetch art.idea as ide WHERE art.estado = 'ENVIADO_POR_CORRECCIONES' AND ide.idProfesor = :idProf"),
 	@NamedQuery(name = "ArticuloEntity.getIdeasNotifiByAlum", query = "SELECT art FROM ArticuloEntity art inner join fetch art.idea as ide inner join ide.usuario usu WHERE art.estado = 'RECHAZO_CON_COMENTARIOS' AND usu.id = :idAlum "),
 	
-	@NamedQuery(name = "ArticuloEntity.updateEstado", query = "update ArticuloEntity art set art.estado = :estado WHERE id = :id")
+	@NamedQuery(name = "ArticuloEntity.updateEstado", query = "update ArticuloEntity art set art.estado = :estado WHERE id = :id"),
+	@NamedQuery(name = "ArticuloEntity.getAllArticulosByIdIdea", query = "select art from ArticuloEntity art inner join art.idea ide WHERE ide.id = :idIdea")
 })
 @Getter @Setter
 public class ArticuloEntity extends Auditable<String> {
@@ -47,7 +48,7 @@ public class ArticuloEntity extends Auditable<String> {
 	@Column(name = "estado")
 	private String estado;
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idea_id")
+	@JoinColumn(name = "idea_id", nullable = false)
 	private IdeaEntity idea;
 	@OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ComentarioEntity> comentarios = new ArrayList<ComentarioEntity>();

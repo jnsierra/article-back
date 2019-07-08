@@ -27,8 +27,8 @@ public class ComentarioService implements IComentarioService {
 	}
 
 	@Override
-	public List<ComentarioEntity> obtenerComentariosByArticulo(Long idArt) {
-		return comentarioRepository.getListByArtId(idArt);
+	public List<ComentarioEntity> obtenerComentariosByArticulo(Long idIdea) {
+		return comentarioRepository.getListByIdeaId(idIdea);
 	}
 
 }
