@@ -64,4 +64,22 @@ public class ArticuloService implements IArticuloService {
 		return articuloRepository.getAllArticulosByIdIdea(IdIdea);
 	}
 
+	@Override
+	public Boolean updateHistoricoByIdea(Long idIdea) {
+		//Obtengo todos los articulos
+		List<ArticuloEntity> listArt = articuloRepository.getArticulosByIdea(idIdea);
+		if( listArt.isEmpty() ) {
+			return Boolean.TRUE;
+		}
+		for(ArticuloEntity item : listArt) {
+			articuloRepository.updateEstado(item.getId(), "HISTORICO");
+		}
+		return Boolean.TRUE;
+	}
+
+	@Override
+	public List<ArticuloEntity> getListArtByIdAlumnoAprobados(Long idAlumn, String estado) {
+		return articuloRepository.getAllArtAprobados(idAlumn, estado);
+	}
+
 }

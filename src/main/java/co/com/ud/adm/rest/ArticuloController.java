@@ -42,6 +42,9 @@ public class ArticuloController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ArticuloDto> saveArticulo(@RequestBody(required = true) ArticuloDto articulo){
+		//Cambio todos los articulos a HISTORICO
+		articuloService.updateHistoricoByIdea(articulo.getIdeaId());
+		
 		articulo = mapper.map(articuloService.guardarArticulo(mapper.map(articulo, ArticuloEntity.class)), ArticuloDto.class) ;
 		if( articulo != null && articulo.getId() != null && articulo.getIdeaId() != null ) {
 			ideaService.updateEstadoIdeaEnEspera(articulo.getIdeaId());
@@ -110,6 +113,58 @@ public class ArticuloController {
 	public ResponseEntity<Boolean> actualizarEstado(@RequestParam("idArticulo")Long idArticulo,
 			@RequestParam("estado") String estado){
 		return new ResponseEntity<>(articuloService.updateEstadoById(idArticulo, estado),HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/alumno/aprobados/{idAlumno}/")
+	public ResponseEntity<ArticuloViewDto[]> obtenerArtAprobados(@PathVariable(name = "idAlumno", required = true) Long idAlumno){
+		List<ArticuloEntity> listArt = articuloService.getListArtByIdAlumnoAprobados(idAlumno, "APROBADO");
+		ArticuloViewDto[] listArticulo = null;
+		if(listArt.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}else {
+			listArticulo = mapper.map(listArt, ArticuloViewDto[].class);			
+			for(int i = 0 ; i < listArticulo.length ; i++) {
+				Optional<UsuarioEntity> profesor = usuarioService.getById( listArticulo[i].getIdea().getIdProfesor() );
+				Optional<UsuarioEntity> proAut = usuarioService.getById( listArticulo[i].getIdea().getIdProfesorAutoriza() );
+				if (profesor.isPresent()) {
+					listArticulo[i].getIdea().setProfesorAsignado(new ProfesorDto());
+					listArticulo[i].getIdea().getProfesorAsignado().setId(profesor.get().getId());
+					listArticulo[i].getIdea().getProfesorAsignado().setNombre(profesor.get().getNombre());
+				}
+				if (proAut.isPresent()) {
+					listArticulo[i].getIdea().setProfesorAutoriza(new ProfesorDto());
+					listArticulo[i].getIdea().getProfesorAutoriza().setId(proAut.get().getId());
+					listArticulo[i].getIdea().getProfesorAutoriza().setNombre(proAut.get().getNombre());
+				}
+			}
+		}
+		return new ResponseEntity<>( listArticulo , HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/alumno/publicados/{idAlumno}/")
+	public ResponseEntity<ArticuloViewDto[]> obtenerArtPublicados(@PathVariable(name = "idAlumno", required = true) Long idAlumno){
+		List<ArticuloEntity> listArt = articuloService.getListArtByIdAlumnoAprobados(idAlumno, "PUBLICADO");
+		ArticuloViewDto[] listArticulo = null;
+		if(listArt.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}else {
+			listArticulo = mapper.map(listArt, ArticuloViewDto[].class);			
+			for(int i = 0 ; i < listArticulo.length ; i++) {
+				Optional<UsuarioEntity> profesor = usuarioService.getById( listArticulo[i].getIdea().getIdProfesor() );
+				Optional<UsuarioEntity> proAut = usuarioService.getById( listArticulo[i].getIdea().getIdProfesorAutoriza() );
+				if (profesor.isPresent()) {
+					listArticulo[i].getIdea().setProfesorAsignado(new ProfesorDto());
+					listArticulo[i].getIdea().getProfesorAsignado().setId(profesor.get().getId());
+					listArticulo[i].getIdea().getProfesorAsignado().setNombre(profesor.get().getNombre());
+				}
+				if (proAut.isPresent()) {
+					listArticulo[i].getIdea().setProfesorAutoriza(new ProfesorDto());
+					listArticulo[i].getIdea().getProfesorAutoriza().setId(proAut.get().getId());
+					listArticulo[i].getIdea().getProfesorAutoriza().setNombre(proAut.get().getNombre());
+				}
+			}
+		}
+		return new ResponseEntity<>( listArticulo , HttpStatus.OK);
 	}
 
 }

@@ -29,9 +29,12 @@ import lombok.Setter;
 	
 	@NamedQuery(name = "ArticuloEntity.getIdeasNotifiByProf", query = "SELECT art FROM ArticuloEntity art inner join fetch art.idea as ide WHERE art.estado = 'ENVIADO_POR_CORRECCIONES' AND ide.idProfesor = :idProf"),
 	@NamedQuery(name = "ArticuloEntity.getIdeasNotifiByAlum", query = "SELECT art FROM ArticuloEntity art inner join fetch art.idea as ide inner join ide.usuario usu WHERE art.estado = 'RECHAZO_CON_COMENTARIOS' AND usu.id = :idAlum "),
+	@NamedQuery(name = "ArticuloEntity.getArticulosByIdea", query = "SELECT art FROM ArticuloEntity art inner join fetch art.idea as ide WHERE ide.id = :idIdea "),
 	
 	@NamedQuery(name = "ArticuloEntity.updateEstado", query = "update ArticuloEntity art set art.estado = :estado WHERE id = :id"),
-	@NamedQuery(name = "ArticuloEntity.getAllArticulosByIdIdea", query = "select art from ArticuloEntity art inner join art.idea ide WHERE ide.id = :idIdea")
+	@NamedQuery(name = "ArticuloEntity.getAllArticulosByIdIdea", query = "select art from ArticuloEntity art inner join art.idea ide WHERE ide.id = :idIdea"),
+	@NamedQuery(name = "ArticuloEntity.getAllArtAprobados", query = "select art from ArticuloEntity art inner join fetch art.idea ide inner join ide.usuario usu WHERE usu.id = :idUsua and art.estado = :estado ")
+	
 })
 @Getter @Setter
 public class ArticuloEntity extends Auditable<String> {

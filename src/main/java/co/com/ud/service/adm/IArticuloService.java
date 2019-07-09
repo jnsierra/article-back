@@ -51,10 +51,23 @@ public interface IArticuloService {
 	 */
 	Boolean updateEstadoById(Long id, String estado);
 	/**
+	 * Metodo con el cual actualizo todos los articulos a estado Historico por medio del Id de la idea
+	 * @param idIdea
+	 * @return
+	 */
+	Boolean updateHistoricoByIdea(Long idIdea);
+	/**
 	 * Metodo con el cual obtiene todas los articulos por medio de su id
 	 * @param IdIdea
 	 * @return
 	 */
 	List<ArticuloEntity> getAllArtByIdIdea(Long IdIdea);
+	/**
+	 * Metodo con el cual busco todos los articulos aprobados de un alumno
+	 * @param idAlumn
+	 * @param estado
+	 * @return
+	 */
+	List<ArticuloEntity> getListArtByIdAlumnoAprobados(Long idAlumn, String estado);
 
 }

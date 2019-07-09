@@ -53,4 +53,16 @@ public interface IArticuloRepository extends CrudRepository<ArticuloEntity, Long
 	 * @return
 	 */
 	List<ArticuloEntity> getAllArticulosByIdIdea(@Param("idIdea")Long idIdea);
+	/**
+	 * Metodo con el cual consulto todos los articulos por el id de la idea
+	 * @param idIdea
+	 * @return
+	 */
+	List<ArticuloEntity> getArticulosByIdea(@Param("idIdea")Long idIdea);
+	/**
+	 * Metodo con el cual obtengo todos los articulos aprobados de un usuario
+	 * @param idUsua
+	 * @return
+	 */
+	List<ArticuloEntity> getAllArtAprobados(@Param("idUsua")Long idUsua, @Param("estado")String estado);
 }
