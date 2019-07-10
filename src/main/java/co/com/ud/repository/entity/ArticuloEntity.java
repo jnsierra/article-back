@@ -33,7 +33,9 @@ import lombok.Setter;
 	
 	@NamedQuery(name = "ArticuloEntity.updateEstado", query = "update ArticuloEntity art set art.estado = :estado WHERE id = :id"),
 	@NamedQuery(name = "ArticuloEntity.getAllArticulosByIdIdea", query = "select art from ArticuloEntity art inner join art.idea ide WHERE ide.id = :idIdea"),
-	@NamedQuery(name = "ArticuloEntity.getAllArtAprobados", query = "select art from ArticuloEntity art inner join fetch art.idea ide inner join ide.usuario usu WHERE usu.id = :idUsua and art.estado = :estado ")
+	@NamedQuery(name = "ArticuloEntity.getAllArtAprobados", query = "select art from ArticuloEntity art inner join fetch art.idea ide inner join ide.usuario usu WHERE usu.id = :idUsua and art.estado = :estado "),
+	
+	@NamedQuery(name = "ArticuloEntity.getArticulosByEstado", query = " select art from ArticuloEntity art WHERE art.estado IN ('PUBLICADO', 'ENVIADO_POR_CORRECCIONES', '' ) ")
 	
 })
 @Getter @Setter

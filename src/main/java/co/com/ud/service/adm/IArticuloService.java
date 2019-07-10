@@ -1,6 +1,7 @@
 package co.com.ud.service.adm;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import co.com.ud.adm.dto.profesor.NotificacionProfDto;
@@ -69,5 +70,10 @@ public interface IArticuloService {
 	 * @return
 	 */
 	List<ArticuloEntity> getListArtByIdAlumnoAprobados(Long idAlumn, String estado);
+	/**
+	 * Metodo con el cual obtengo los estados y sus cantidades
+	 * @return
+	 */
+	Map<String, Long> getArticulosByEstado();
 
 }

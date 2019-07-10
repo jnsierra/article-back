@@ -30,7 +30,8 @@ import lombok.Setter;
 	@NamedQuery(name = "IdeaEntity.buscarIdeaByProfesorAndEstado", query = "select idea from IdeaEntity idea where idea.estado = :estado and idea.idProfesor = :idProfesor order by idea.estado"),
 	@NamedQuery(name = "IdeaEntity.buscarIdeaByProfesor", query = "select idea from IdeaEntity idea where idea.idProfesor = :idProfesor"),
 	@NamedQuery(name = "IdeaEntity.updateEstado", query = "update IdeaEntity idea SET idea.estado = :estado, idea.idProfesorAutoriza = :idProfAut, idea.fechaAprobacion = now() WHERE idea.id = :idIdea"),
-	@NamedQuery(name = "IdeaEntity.updateEstadoEspera", query = "update IdeaEntity idea SET idea.estado = 'EN_ESPERA' WHERE idea.id = :idIdea")
+	@NamedQuery(name = "IdeaEntity.updateEstadoEspera", query = "update IdeaEntity idea SET idea.estado = 'EN_ESPERA' WHERE idea.id = :idIdea"),
+	@NamedQuery(name = "IdeaEntity.getEstadoIdeas", query = "SELECT idea FROM IdeaEntity idea where idea.estado in ('RECHAZAR','CREADA','APROBAR') order by idea.estado ")
 })
 @Getter
 @Setter

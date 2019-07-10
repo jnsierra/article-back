@@ -58,4 +58,9 @@ public interface IIdeaRepository extends CrudRepository<IdeaEntity, Long>, JpaRe
 	@Modifying
 	@Transactional
 	Integer updateEstadoEspera(@Param("idIdea")Long idIdea);
+	/**
+	 * Metodo con el cual obtengo las ideas por medio de su estado
+	 * @return
+	 */
+	List<IdeaEntity> getEstadoIdeas();
 }

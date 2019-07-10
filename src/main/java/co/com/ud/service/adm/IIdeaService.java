@@ -1,6 +1,7 @@
 package co.com.ud.service.adm;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import co.com.ud.repository.entity.IdeaEntity;
@@ -47,4 +48,9 @@ public interface IIdeaService {
 	 * @return
 	 */
 	Optional<IdeaEntity> findByIdea(Long id);
+	/**
+	 * Metodo con el cual obtengo las ideas por medio de su estado
+	 * @return
+	 */
+	Map<String, Long>  getEstadoIdeas();
 }

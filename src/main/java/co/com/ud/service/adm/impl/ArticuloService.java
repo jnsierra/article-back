@@ -1,6 +1,7 @@
 package co.com.ud.service.adm.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -80,6 +81,12 @@ public class ArticuloService implements IArticuloService {
 	@Override
 	public List<ArticuloEntity> getListArtByIdAlumnoAprobados(Long idAlumn, String estado) {
 		return articuloRepository.getAllArtAprobados(idAlumn, estado);
+	}
+
+	@Override
+	public Map<String, Long> getArticulosByEstado() {
+		return articuloRepository.getArticulosByEstado().stream().parallel()
+				.collect(Collectors.groupingBy(ArticuloEntity::getEstado, Collectors.counting()));
 	}
 
 }
